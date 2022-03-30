@@ -1,6 +1,7 @@
-.myCanvas {
-    width: 1100px;
-    height: 600px;
-    background-color: #3e2723;
-    border: 2px solid #FFF;
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
