@@ -24,5 +24,8 @@ export const trace = {
 export const ball = {
     x: 800 / 2,
     y: 400 / 2,
-    radius: 10
+    radius: 10,
+    speed: 5,
+    dx: 5,
+    dy: 5,
 }

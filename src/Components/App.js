@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import {userOne, userTwo, trace, ball} from './Data'
-import classes from './App.module.css'
+import {userOne, userTwo, trace, ball} from './Data';
+import {update} from './UpdateMovement';
+import classes from './App.module.css';
+
 
 function App() {
 
@@ -8,24 +10,36 @@ function App() {
   let context;
   let cWidth;
   let cHeight;
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
   
-    context = canvas.getContext('2d');
-    cWidth = canvas.width;
-    cHeight = canvas.height;
+  useEffect(() => {
 
-    drawRect(0, 0, cWidth, cHeight, '#000');
-    drawBorder(0, 0, cWidth, 0, '#FFF');
-    drawBorder(0, cHeight, cWidth, cHeight, '#FFF');
-    drawText(userOne.score, cWidth / 4, cHeight / 5, '#FFF');
-    drawText(userOne.score, 3*cWidth / 4, cHeight / 5, '#FFF');
-    drawTraceTiran(trace.x, trace.y, trace.width, trace.height);
-    drawRect(userOne.x, userOne.y, userOne.width, userOne.height, '#FFF');
-    drawRect(userTwo.x, userTwo.y, userTwo.width, userTwo.height, '#FFF');
-    DrawCircle(ball.x, ball.y, ball.radius, '#FFF');
-  });
+    const render = () => {
+
+      const canvas = canvasRef.current;
+      context = canvas.getContext('2d');
+      cWidth = canvas.width;
+      cHeight = canvas.height;
+      
+      //NOTE - Movements, Collision detection, Score Update
+      update(cWidth, cHeight);
+      
+      drawRect(0, 0, cWidth, cHeight, '#000');
+      drawBorder(0, 0, cWidth, 0, '#FFF');
+      drawBorder(0, cHeight, cWidth, cHeight, '#FFF'); 
+      drawText(userOne.score, cWidth / 4, cHeight / 5, '#FFF');
+      drawText(userTwo.score, 3*cWidth / 4, cHeight / 5, '#FFF');
+      drawTraceTiran(trace.x, trace.y, trace.width, trace.height);
+      drawRect(userOne.x, userOne.y, userOne.width, userOne.height, '#FFF');
+      drawRect(userTwo.x, userTwo.y, userTwo.width, userTwo.height, '#FFF');
+      DrawCircle(ball.x, ball.y, ball.radius, '#FFF');
+      
+      //NOTE - Call function render(); 60 times every 1000ms = 1sec
+      requestAnimationFrame(render);
+    }
+
+    render();
+
+  }, []);
 
   function drawRect(x, y, w, h, color) {
     context.beginPath();
