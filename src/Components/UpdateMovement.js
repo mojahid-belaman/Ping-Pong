@@ -6,7 +6,7 @@ export function update(cWidth, cHeight) {
     ball.y += ball.dy;
 
     //NOTE - When the ball collides with bottom and top wall we inverse the dy 
-    if (ball.y + ball.radius > cHeight - 5 || ball.y - ball.radius < 0)
+    if (ball.y + ball.radius > cHeight - 15 || ball.y - ball.radius < 15)
       ball.dy *= -1;
 
     //NOTE - We check if the ball hit the useOne or the userTwo paddle
@@ -26,7 +26,7 @@ export function update(cWidth, cHeight) {
       //NOTE - When the ball hits the bottom of the paddle we want the ball to take a 45degrees angle
       //NOTE - Math.PI/4 = 45degrees
       let angleRad = (Math.PI / 4) * collidePoint;
-     
+      
       //NOTE - X direction of the ball when it's hit
       let direction = (ball.x < cWidth / 2) ? 1 : -1;
       
@@ -35,7 +35,9 @@ export function update(cWidth, cHeight) {
       ball.dy = ball.speed * Math.sign(angleRad);
 
       //NOTE - Speed up the ball everytime a paddle hit it
-      ball.speed += 0.5;
+      if (ball.speed < 12)
+        ball.speed += 0.5;
+      console.log(ball.speed);
     }
 
     //NOTE - Update the Score
@@ -54,5 +56,6 @@ function resetBall(cWidth, cHeight) {
     ball.x = cWidth / 2;
     ball.y = cHeight / 2;
     ball.speed = 5;
+    console.log(ball.speed);
     ball.dx = -ball.dx;
 }
