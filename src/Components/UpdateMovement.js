@@ -4,7 +4,7 @@ import {detectCollosion} from './DetectCollision'
 export function update(cWidth, cHeight) {
     ball.x += ball.dx;
     ball.y += ball.dy;
-
+    
     //NOTE - When the ball collides with bottom and top wall we inverse the dy 
     if (ball.y + ball.radius > cHeight - 15 || ball.y - ball.radius < 15)
       ball.dy *= -1;
