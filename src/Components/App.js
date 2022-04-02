@@ -11,9 +11,13 @@ function App() {
   let context;
   let cWidth;
   let cHeight;
+  let upPressedOne = false;
+  let downPressedOne = false;
+  let upPressedTwo = false;
+  let downPressedTwo = false;
   
   const [isCheck, setCheck] = useState(false);
-  
+
   useEffect(() => {
     
     const canvas = canvasRef.current;
@@ -27,6 +31,12 @@ function App() {
         //NOTE - Movements, Collision detection, Score Update
         update(cWidth, cHeight);
         Game(context, cWidth, cHeight, isCheck);
+        if (upPressedOne && userOne.y > 10) {
+          userOne.y -=10;
+        }
+        else if (downPressedOne && userOne.height + userOne.y < cHeight - 10) {
+          userOne.y +=10;
+        }
       }
       else {
         Game(context, cWidth, cHeight, isCheck);
@@ -44,23 +54,44 @@ function App() {
 
   }, [isCheck]);
 
-  window.addEventListener('keypress', function(e) {
-    if (e.key === 'w' && userOne.y > 10) {
-      userOne.y -= 20;
+  document.addEventListener('keyup', keyUpHandler);
+  document.addEventListener('keydown', keyDownHandler);
+
+  function keyDownHandler(e) {
+    if(e.key == "w") {
+        upPressedOne = true;
     }
-    else if (e.key === 's' && userOne.height + userOne.y < cHeight - 10) {
-      userOne.y +=20;
+    else if(e.key == "s") {
+        downPressedOne = true;
     }
-  })
+  }
+  function keyUpHandler(e) {
+    if(e.key == "w") {
+      upPressedOne = false;
+    }
+    else if(e.key == "s") {
+      downPressedOne = false;
+    }
+  }
+  //  {
+  //   if (e.key === 'w' && userOne.y > 10) {
+  //     userOne.y -= 20;
+  //   }
+  //   else if (e.key === 's' && userOne.height + userOne.y < cHeight - 10) {
+  //     userOne.y +=20;
+  //   }
+  // })
   
-  window.addEventListener('keyup', function(e) {
-    if (e.key === 'ArrowUp' && userTwo.y > 10) {
-      userTwo.y -=20;
-    }
-    else if (e.key === 'ArrowDown' && userTwo.height + userTwo.y < cHeight - 10) {
-      userTwo.y +=20;
-    }
-  })
+  // document.addEventListener('keydown', function(e) {
+  //   if (e.key === 'ArrowUp' && userTwo.y > 10) {
+  //     userTwo.y -=20;
+  //   }
+  //   else if (e.key === 'ArrowDown' && userTwo.height + userTwo.y < cHeight - 10) {
+  //     userTwo.y +=20;
+  //   }
+  // })
+
+
 
   return (
     <div className={classes.container}>
