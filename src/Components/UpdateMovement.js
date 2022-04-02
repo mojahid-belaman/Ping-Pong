@@ -1,6 +1,9 @@
 import {userOne, userTwo, ball} from './Data';
 import {detectCollosion} from './DetectCollision'
 
+let isOne = false;
+let isTwo = false;
+
 export function update(cWidth, cHeight) {
     ball.x += ball.dx;
     ball.y += ball.dy;
@@ -11,6 +14,7 @@ export function update(cWidth, cHeight) {
 
     //NOTE - We check if the ball hit the useOne or the userTwo paddle
     let user = (ball.x < cWidth / 2) ? userOne : userTwo;
+
 
     if (detectCollosion(ball, user)) {
       
@@ -39,23 +43,32 @@ export function update(cWidth, cHeight) {
         ball.speed += 0.5;
       console.log(ball.speed);
     }
-
+    
     //NOTE - Update the Score
-    if (ball.x - ball.radius < 0) {
+    if (ball.x - ball.radius < 0)
+    {
+      isOne = true;
       userOne.score++;
       resetBall(cWidth, cHeight);
     }
-    else if (ball.x + ball.radius > cWidth) {
+    else if (ball.x + ball.radius > cWidth)
+    {
+      isTwo = true;
       userTwo.score++;
       resetBall(cWidth, cHeight);
     }
-}
-
-//NOTE - When userOne or userTwo scores, we reset the ball
-function resetBall(cWidth, cHeight) {
+  }
+  
+  //NOTE - When userOne or userTwo scores, we reset the ball
+  function resetBall(cWidth, cHeight) {
     ball.x = cWidth / 2;
     ball.y = cHeight / 2;
     ball.speed = 5;
-    console.log(ball.speed);
-    ball.dx = -ball.dx;
+    if (isOne)
+      ball.dx = ball.speed;
+    else 
+      ball.dx = ball.speed * -1;
+    ball.dy = ball.speed;
+    isOne = false;
+    isTwo = false;
 }

@@ -16,7 +16,7 @@ function App() {
   let upPressedTwo = false;
   let downPressedTwo = false;
   
-  const [isCheck, setCheck] = useState(false);
+  const [isCheck, setCheck] = useState(false); 
 
   useEffect(() => {
     
@@ -34,8 +34,14 @@ function App() {
         if (upPressedOne && userOne.y > 10) {
           userOne.y -=10;
         }
-        else if (downPressedOne && userOne.height + userOne.y < cHeight - 10) {
+        if (downPressedOne && userOne.height + userOne.y < cHeight - 10) {
           userOne.y +=10;
+        }
+        if (upPressedTwo && userTwo.y > 10) {
+          userTwo.y -=10;
+        }
+        if (downPressedTwo && userTwo.height + userTwo.y < cHeight - 10) {
+          userTwo.y +=10;
         }
       }
       else {
@@ -62,7 +68,13 @@ function App() {
         upPressedOne = true;
     }
     else if(e.key == "s") {
-        downPressedOne = true;
+        downPressedOne = true
+    }
+    else if(e.key == "ArrowUp") {
+        upPressedTwo = true
+    }
+    else if(e.key == "ArrowDown") {
+        downPressedTwo = true
     }
   }
   function keyUpHandler(e) {
@@ -72,26 +84,13 @@ function App() {
     else if(e.key == "s") {
       downPressedOne = false;
     }
+    else if(e.key == "ArrowUp") {
+      upPressedTwo = false;
+    }
+    else if(e.key == "ArrowDown") {
+        downPressedTwo = false;
+    }
   }
-  //  {
-  //   if (e.key === 'w' && userOne.y > 10) {
-  //     userOne.y -= 20;
-  //   }
-  //   else if (e.key === 's' && userOne.height + userOne.y < cHeight - 10) {
-  //     userOne.y +=20;
-  //   }
-  // })
-  
-  // document.addEventListener('keydown', function(e) {
-  //   if (e.key === 'ArrowUp' && userTwo.y > 10) {
-  //     userTwo.y -=20;
-  //   }
-  //   else if (e.key === 'ArrowDown' && userTwo.height + userTwo.y < cHeight - 10) {
-  //     userTwo.y +=20;
-  //   }
-  // })
-
-
 
   return (
     <div className={classes.container}>
